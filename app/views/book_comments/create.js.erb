@@ -1,0 +1,3 @@
+$('#book_comment_buttons').html("<%= j(render "book_comments/book_comment", book: @book) %>")
+$(".form-control").val("")
+$('#comment_count').html("<%= j(render "book_comments/comment_count", book: @book) %>");
