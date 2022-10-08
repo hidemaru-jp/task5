@@ -17,12 +17,27 @@
           </td>
           <td><%= link_to @books.title, @books %></td>
           <td><%= @books.body %></td>
+
+          <td id="favorite_buttons_<%= @books.id %>"><%= render "favorites/favorite", book: @books %></td>
+          <td id="comment_count"><%= render "book_comments/comment_count", book: @books %></td>
+          <td>
+            <div id="star-rate<%= @books.id%>"></div>
+            <script>
+              $('#star-rate<%= @books.id%>').raty({
+                size      : 36,
+                starOff   : '<%= asset_path('star-off.png') %>',
+                starOn    : '<%= asset_path('star-on.png') %>',
+                half      : false,
+                readOnly: true,
+                score: <%= @books.star %>,
+              });
+            </script>
+          </td>
           <% if @user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@books), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', book_path(@books.id), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
-            <td id="favorite_buttons_<%= @books.id %>"><%= render "favorites/favorite", book: @books %></td>
-            <td id="comment_count"><%= render "book_comments/comment_count", book: @books %></td>
+
         </tr>
       </table>
       <div id="book_comment_buttons"><%= render "book_comments/book_comment", book: @books %></div>
