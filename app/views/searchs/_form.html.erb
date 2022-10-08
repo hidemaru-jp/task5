@@ -4,5 +4,7 @@
       <%= select_tag 'model', options_for_select({ "User" => "user", "Book" => "book" }) %>
       <%= select_tag 'method', options_for_select({ "完全一致" => "perfect", "部分一致" => "partial" }) %>
       <%= submit_tag '検索' %>
+      <%= text_field_tag 'tag_content' %>
+      <%= submit_tag 'タグ検索' %>
     <% end %>
 <% end %>

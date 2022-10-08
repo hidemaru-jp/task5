@@ -19,7 +19,7 @@ class BooksController < ApplicationController
     else
       @books = Book.all
     end
-    
+
     @book = Book.new
   end
 
@@ -57,7 +57,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:image, :title, :body, :star)
+    params.require(:book).permit(:image, :title, :body, :star, :tag)
   end
 
   def correct_user
