@@ -17,7 +17,8 @@ class BooksController < ApplicationController
     elsif params[:star_count]
       @books = Book.star_count
     else
-     @books = Book.latest
+      @books = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
+
     end
 
     @book = Book.new
