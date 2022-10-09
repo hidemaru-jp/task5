@@ -14,7 +14,7 @@
       |<%= link_to '評価の高い順', books_path(star_count: "true") %>
       |<%= link_to 'いいねの高い順', books_path %>
       </p>
-      <%= render 'index', books: @books%>
+      <%= render 'index', books: @books, book_detail: @book_detail %>
     </div>
   </div>
 </div>

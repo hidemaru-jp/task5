@@ -5,7 +5,14 @@ class BooksController < ApplicationController
     @book = Book.new
     @books = Book.find(params[:id])
     @user = User.find(@books.user_id)
+
+    @book_detail = Book.find(params[:id])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+      current_user.view_counts.create(book_id: @book_detail.id)
+    end
+
     @book_comment = BookComment.new
+
     @currentUserEntry=Entry.where(user_id: current_user.id)
     @userEntry=Entry.where(user_id: @user.id)
     if @user.id == current_user.id
@@ -28,6 +35,7 @@ class BooksController < ApplicationController
   end
 
   def index
+
     if params[:latest]
       @books = Book.latest
     elsif params[:old]
@@ -40,6 +48,7 @@ class BooksController < ApplicationController
     end
 
     @book = Book.new
+
 
 
 

@@ -20,6 +20,7 @@
         <td><%= book.tag %></td>
     　　<td id="favorite_buttons_<%= book.id %>"><%= render "favorites/favorite", book: book %></td>
         <td><%= link_to "#{book.book_comments.count} コメント", book_path(book.id) %></td>
+        <td><p class="view-count">閲覧数: <%= book.view_counts.count %></p></td>
         <td>
           <div id="star-rate<%= book.id%>"></div>
           <script>
