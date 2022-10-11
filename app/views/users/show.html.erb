@@ -1,16 +1,109 @@
 
+<body>
+  <div class='container px-5 px-sm-0'>
+    <div class='row'>
+      <div class='col-md-3'>
+        <h2>User info</h2>
+        <%= render 'info', user: @user %>
+        <h2 class="mt-3">New book</h2>
+        <%= render 'books/form', book: @book %>
+      </div>
+      <div class='col-md-8 offset-md-1'>
+        <h2>Books</h2>
+        <%= render 'books/index',books: @books %>
+        <h1>投稿数の前日比・前週比</h1>
+        <table class='table table-hover table-inverse'>
+          <thead>
+          <th><p>今日の投稿数</p></th>
+          <th><p>前日の投稿数</p></th>
+          <th><p>前日比</p></th>
+          </thead>
+          <thead>
+          <th><%= @today_book.count %></th>
+          <th><%= @yesterday_book.count %></th>
+          <% if @yesterday_book.count == 0 %>
+            <th>前日の投稿はなし</th>
+          <% else %>
+       　    <th><% @the_day_before =   @today_book.count / @yesterday_book.count.to_f  %>
+             <%= (@the_day_before * 100).round %>%</th>
+          <% end %>
+          </thead>
+          <th><p>今週の投稿数</p></th>
+          <th><p>前週の投稿数</p></th>
+          <th><p>前週比</p></th>
+          </thead>
+          <thead>
+          <th><%= @this_week_book.count %></th>
+          <th><%= @last_week_book.count %></th>
+          <% if @last_week_book.count == 0 %>
+            <th>先週の投稿はなし</th>
+          <% else %>
+            <th><% @the_week_before =   @this_week_book.count / @last_week_book.count.to_f  %>
+       　        <%= (@the_week_before * 100).round %>%<th>
+          <% end %>
+          </thead>
+        </table>
+        <table class='table table-hover table-inverse'>
+          <thead>
+           <th>６日前</th>
+           <th>5日前</th>
+           <th>4日前</th>
+           <th>3日前</th>
+           <th>２日前</th>
+           <th>昨日</th>
+           <th>今日</th>
+          </thead>
+          <thead>
+           <th><%= @books.created_6days.count %></th>
+           <th><%= @books.created_5days.count %></th>
+           <th><%= @books.created_4days.count %></th>
+           <th><%= @books.created_3days.count %></th>
+           <th><%= @books.created_2days.count %></th>
+           <th><%= @yesterday_book.count %></th>
+           <th><%= @today_book.count %></th>
+          </thead>
+          <canvas id="myLineChart"></canvas>
+            <script>
+                $(document).on('turbolinks:load', function() {
+                var ctx = document.getElementById("myLineChart");
+                var myLineChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                    labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+                    datasets: [
+                      {
+                        label: '投稿した本の数',
+                        data: [<%= @books.created_6days.count %>, <%= @books.created_5days.count %>, <%= @books.created_4days.count %>, <%= @books.created_3days.count %>, <%= @books.created_2days.count %>, <%= @yesterday_book.count %>, <%= @today_book.count%>],
+                        borderColor: "rgba(0,0,255,1)",
+                        backgroundColor: "rgba(0,0,0,0)"
+                      }
+                    ],
+                  },
+                  options: {
+                    title: {
+                      display: true,
+                      text: '7日間の投稿数の比較'
+                    },
+                    scales: {
+                      yAxes: [{
+                        ticks: {
+                          suggestedMax: 10,
+                          suggestedMin: 0,
+                          stepSize: 1,
+                          callback: function(value, index, values){
+                            return  value
+                          }
+                        }
+                      }]
+                    },
+                  }
+                });
+              });
+            </script>
+        </table>
 
-<div class='container px-5 px-sm-0'>
-  <div class='row'>
-    <div class='col-md-3'>
-      <h2>User info</h2>
-      <%= render 'info', user: @user %>
-      <h2 class="mt-3">New book</h2>
-      <%= render 'books/form', book: @book %>
-    </div>
-    <div class='col-md-8 offset-md-1'>
-      <h2>Books</h2>
-      <%= render 'books/index',books: @books %>
+
+      </div>
     </div>
   </div>
-</div>
+</body>

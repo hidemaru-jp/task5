@@ -13,6 +13,7 @@ import "bootstrap"
 import '@fortawesome/fontawesome-free/js/all';
 import "../stylesheets/application"
 import "raty.js"
+import "chart.js"
 
 window.$ = window.jQuery = require('jquery');
 
